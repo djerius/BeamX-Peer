@@ -1,0 +1,4 @@
+\.build
+.gz$
+^BeamX-Peer-Emitter-
+~$
