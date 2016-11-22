@@ -24,6 +24,7 @@ on 'configure' => sub {
 on 'develop' => sub {
   requires "Dist::Zilla" => "5";
   requires "Dist::Zilla::Plugin::AutoMetaResources" => "0";
+  requires "Dist::Zilla::Plugin::BumpVersionAfterRelease" => "0";
   requires "Dist::Zilla::Plugin::CPANFile" => "0";
   requires "Dist::Zilla::Plugin::CheckMetaResources" => "0";
   requires "Dist::Zilla::Plugin::CopyFilesFromBuild" => "0";

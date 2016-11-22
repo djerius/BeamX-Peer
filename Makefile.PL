@@ -12,9 +12,9 @@ my %WriteMakefileArgs = (
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => 0
   },
-  "DISTNAME" => "BeamX-Peer",
+  "DISTNAME" => "BeamX-Peer-Emitter",
   "LICENSE" => "gpl",
-  "NAME" => "BeamX::Peer",
+  "NAME" => "BeamX::Peer::Emitter",
   "PREREQ_PM" => {
     "Beam::Emitter" => "1.005",
     "Moo" => 0,
@@ -30,7 +30,7 @@ my %WriteMakefileArgs = (
     "IPC::Open3" => 0,
     "Test::More" => 0
   },
-  "VERSION" => "0.001",
+  "VERSION" => "0.002",
   "test" => {
     "TESTS" => "t/*.t"
   }

@@ -4,7 +4,7 @@ BeamX::Peer::Emitter - Beam::Emitter with peer-to-peer messaging
 
 # VERSION
 
-version 0.001
+version 0.002
 
 # SYNOPSIS
 
