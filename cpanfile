@@ -1,4 +1,4 @@
-requires "Beam::Emitter" => "1.004";
+requires "Beam::Emitter" => "1.005";
 requires "Moo" => "0";
 requires "Safe::Isa" => "0";
 requires "Types::Standard" => "0";

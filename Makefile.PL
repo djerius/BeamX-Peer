@@ -16,7 +16,7 @@ my %WriteMakefileArgs = (
   "LICENSE" => "gpl",
   "NAME" => "BeamX::Peer",
   "PREREQ_PM" => {
-    "Beam::Emitter" => "1.004",
+    "Beam::Emitter" => "1.005",
     "Moo" => 0,
     "Safe::Isa" => 0,
     "Types::Standard" => 0,
@@ -38,7 +38,7 @@ my %WriteMakefileArgs = (
 
 
 my %FallbackPrereqs = (
-  "Beam::Emitter" => "1.004",
+  "Beam::Emitter" => "1.005",
   "ExtUtils::MakeMaker" => 0,
   "File::Spec" => 0,
   "IO::Handle" => 0,
