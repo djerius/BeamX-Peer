@@ -115,18 +115,18 @@ __END__
 Results in:
 
   Broadcast Event object:
-  non-peer: recieved: event 'alert' from node N1
-  N2: recieved: event 'alert' from node N1
+  non-peer: received event 'alert' from node N1
+  N2: received event 'alert' from node N1
 
   Send Event object directly to $n2
-  N2: recieved: event 'alert' from node N1
+  N2: received event 'alert' from node N1
 
   Broadcast arbitrary args
-  non-peer: recieved: Server's Down!
-  N2: recieved: Server's Down!
+  non-peer: Server's Down!
+  N2: Server's Down!
 
   Send arbitrary args directly to $n2
-  N2: recieved: Let's get coffee!
+  N2: Let's get coffee!
 
 
 =head1 DESCRIPTION
