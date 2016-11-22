@@ -3,7 +3,7 @@ package BeamX::Peer::Listener;
 use Types::Standard ':all';
 use Moo;
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 
 extends 'Beam::Listener';
 

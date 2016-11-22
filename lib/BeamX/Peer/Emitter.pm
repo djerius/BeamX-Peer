@@ -8,7 +8,7 @@ use Safe::Isa;
 use Moo::Role;
 with 'Beam::Emitter';
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 
 sub _find_listener {
 
