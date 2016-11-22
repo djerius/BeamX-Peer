@@ -1,0 +1,147 @@
+# NAME
+
+BeamX::Peer::Emitter - Beam::Emitter with peer-to-peer messaging
+
+# VERSION
+
+version 0.001
+
+# SYNOPSIS
+
+    use 5.10.0;
+    use Safe::Isa;
+    
+    package Node {
+    
+        use Safe::Isa;
+        use Moo;
+        with 'BeamX::Peer::Emitter';
+    
+        has id => (
+            is       => 'ro',
+            required => 1,
+        );
+    
+        sub recv {
+    
+            my $self = shift;
+    
+            my $got
+              = $_[0]->$_isa( 'Beam::Event' )
+              ? sprintf( "event '%s' from node %s", $_[0]->name,
+                $_[0]->emitter->id )
+              : join( ' ', @_ );
+    
+            say $self->id, ": recieved: $got";
+        }
+    
+    }
+    
+    sub alert_cb {
+        my $got
+          = $_[0]->$_isa( 'Beam::Event' )
+          ? sprintf( "event '%s' from node %s", $_[0]->name, $_[0]->emitter->id )
+          : join( ' ', @_ );
+    
+        say "non-peer: recieved: $got";
+    }
+    
+    
+    my $n1 = Node->new( id => 'N1' );
+    my $n2 = Node->new( id => 'N2' );
+    
+    
+    # standard Beam::Emitter event
+    $n1->subscribe( 'alert', \&alert_cb );
+    
+    # explicit peer event
+    $n1->subscribe( 'alert', sub { $n2->recv( @_ ) }, peer => $n2 );
+    
+    say "Broadcast Event object:";
+    $n1->emit( 'alert' );
+    
+    say "\nSend Event object directly to \$n2";
+    $n1->send( $n2, 'alert' );
+    
+    say "\nBroadcast arbitrary args";
+    $n1->emit_args( 'alert', q[Server's Down!] );
+    
+    say "\nSend arbitrary args directly to \$n2";
+    $n1->send_args( $n2, 'alert', q[Let's get coffee!] );
+
+Results in:
+
+    Broadcast Event object:
+    non-peer: recieved: event 'alert' from node N1
+    N2: recieved: event 'alert' from node N1
+
+    Send Event object directly to $n2
+    N2: recieved: event 'alert' from node N1
+
+    Broadcast arbitrary args
+    non-peer: recieved: Server's Down!
+    N2: recieved: Server's Down!
+
+    Send arbitrary args directly to $n2
+    N2: recieved: Let's get coffee!
+
+# DESCRIPTION
+
+**BeamX::Peer::Emitter** is a role (based upon [Beam::Emitter](https://metacpan.org/pod/Beam::Emitter)) which
+adds the ability to notify individual subscribers (peers) of
+events to [Beam::Emitter](https://metacpan.org/pod/Beam::Emitter)'s publish/subscribe capabilities.
+
+# METHODS
+
+## subscribe
+
+    # subscribe as Beam::Emitter does
+    $emitter->subscribe( $event_name, $subref, [, %args] );
+
+Subscribe to the named event from `$emitter`.  `$subref`
+will be called when the event is emitted.
+
+By default, the emitter tracks the listener with an object of class
+[BeamX::Peer::Listener](https://metacpan.org/pod/BeamX::Peer::Listener).  `%args` is used to pass arguments
+to its constructor.
+
+To enable `$emitter` to send the event directly to a `$peer` via
+the [send](https://metacpan.org/pod/send) method, specify the peer with the `peer` key in `%args`.
+
+    $emitter->subscribe( $event_name, $subref, peer => $peer, %args );
+
+To use a different listener class, subclass **BeamX::Peer::Emitter**
+and pass its name via the `class` key in `%args`.
+
+    $emitter->subscribe( $event_name, $subref, class => MyListener, %args );
+
+## send
+
+    $emitter->send( $peer, $event_name [, %args] );
+
+Send the named event to the specified peer.  `%args` is a list of
+name, value pairs to pass to the [Beam::Event](https://metacpan.org/pod/Beam::Event) constructor; use the
+`class` key to specify an alternate event class.
+
+## send\_args
+
+    $emitter->send_args( $peer, $event_name, @args] );
+
+Send the named event to the specified peer.  `@args` will be passed
+to the subscribed callback.
+
+# SEE ALSO
+
+[Beam::Emitter](https://metacpan.org/pod/Beam::Emitter)
+
+# AUTHOR
+
+Diab Jerius <djerius@cpan.org>
+
+# COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2016 by the Smithsonian Astrophysical Observatory.
+
+This is free software, licensed under:
+
+    The GNU General Public License, Version 3, June 2007
