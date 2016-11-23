@@ -15,7 +15,8 @@ sub fmt_msg {
       : join( ' ', @_ );
 }
 
-package Node {
+{
+    package Node;
 
     use Safe::Isa;
     use Moo;
