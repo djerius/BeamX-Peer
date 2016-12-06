@@ -5,6 +5,7 @@ use warnings;
 
 use 5.10.0;
 use Safe::Isa;
+use curry::weak;
 
 sub fmt_msg {
     $_[0]->$_isa( 'Beam::Event' )
@@ -39,7 +40,7 @@ my $n2 = Node->new( id => 'N2' );
 $n1->subscribe( 'alert', sub { say 'non-peer: ', &fmt_msg  } );
 
 # explicit peer event
-$n1->subscribe( 'alert', sub { $n2->recv( @_ ) }, peer => $n2 );
+$n1->subscribe( 'alert', $n2->curry::weak::recv, peer => $n2 );
 
 say "Broadcast Event object:";
 $n1->emit( 'alert' );
