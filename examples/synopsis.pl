@@ -8,14 +8,14 @@ use Safe::Isa;
 
 sub fmt_msg {
     $_[0]->$_isa( 'Beam::Event' )
-      ? sprintf( "received event '%s' from node %s", $_[0]->name, $_[0]->emitter->id )
+      ? sprintf( "received event '%s' from node %s",
+		 $_[0]->name, $_[0]->emitter->id )
       : join( ' ', @_ );
 }
 
 
 package Node {
 
-    use Safe::Isa;
     use Moo;
     with 'BeamX::Peer::Emitter';
 
@@ -25,9 +25,7 @@ package Node {
     );
 
     sub recv {
-
         my $self = shift;
-
         say $self->id, ': ', &::fmt_msg;
     }
 
